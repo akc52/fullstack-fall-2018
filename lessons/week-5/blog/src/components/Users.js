@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 class Users extends Component {
@@ -29,7 +30,9 @@ class Users extends Component {
         <h2>Users</h2>
         <ul>
           {this.state.users.map( user => (
-            <li key={user._id}>{user.name}</li>
+            <li key={user._id}>
+              <Link to={`/users/${user._id}`}>{user.name}</Link>
+            </li>
           ))}
         </ul>
         <pre>

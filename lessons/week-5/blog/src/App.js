@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import axios from 'axios'
 import './App.css';
 import Users from './components/Users'
+import Profile from './components/Profile'
 import Posts from './components/Posts'
+import Post from './components/Post'
 
 class App extends Component {
   state = {
@@ -30,8 +32,10 @@ class App extends Component {
             <h1>Hello {this.state.user.name}!</h1>
             <p>To see a list of users, <Link to='/users'>click here.</Link></p>
             <p>To see a list of posts, <Link to='/posts'>click here.</Link></p>
-            <Route path='/users' component={Users} />
+            <Route exact path='/users' component={Users} />
+            <Route path='/users/:userId' component={Profile} />
             <Route path='/posts' component={Posts} />
+            <Route path='/posts/:postId' component={Post} />
           </div>
         </Router>
       )

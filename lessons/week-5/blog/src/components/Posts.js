@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 class Posts extends Component {
@@ -29,7 +30,10 @@ class Posts extends Component {
         <h2>Posts</h2>
         <ul>
           {this.state.posts.map( post => (
-            <li key={post._id}>{post.title} - {post.user.name}</li>
+            <li key={post._id}>
+              <Link to={`/posts/${post._id}`}>
+                {post.title}
+              </Link> - {post.user.name}</li>
           ))}
         </ul>
       </div>
