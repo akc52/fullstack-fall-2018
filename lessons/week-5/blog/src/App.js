@@ -1,26 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import axios from 'axios'
 import './App.css';
+import Users from './components/Users'
+import Posts from './components/Posts'
 
 class App extends Component {
+  state = {
+    user: null
+  }
+
+  login = async () => {
+    // hacky/temp sign in - Get all users, return first one
+    const res = await axios.get('users')
+    return res.data.data[0]
+  }
+
+  async componentDidMount() {
+    const user = await this.login()
+    this.setState({ user })
+  }
+
   render() {
+    // If no user, display 'not logged in'
+    if(this.state.user) {
+      return (
+        <Router>
+          <div>
+            <h1>Hello {this.state.user.name}!</h1>
+            <p>To see a list of users, <Link to='/users'>click here.</Link></p>
+            <p>To see a list of posts, <Link to='/posts'>click here.</Link></p>
+            <Route path='/users' component={Users} />
+            <Route path='/posts' component={Posts} />
+          </div>
+        </Router>
+      )
+    }
+    // If a user, greet them
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <h1>Not logged in</h1>
     );
   }
 }
