@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Comment from './Comment'
 
 class Post extends Component {
   state = {
@@ -16,10 +17,13 @@ class Post extends Component {
     })
   }
   render() {
+    if(!this.state.post) return <p>Loading...</p>
     return (
       <div>
         <h2>Post Details</h2>
-        {JSON.stringify(this.state.post, null, 3)}
+        <h3>{this.state.post.title}</h3>
+        <p>{this.state.post.description}</p>
+        {this.state.post.comments.map( comment => <Comment {...comment} />)}
       </div>
     )
   }

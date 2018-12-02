@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import axios from 'axios'
 import './App.css';
 import Users from './components/Users'
 import Posts from './components/Posts'
 import Profile from './components/Profile'
 import Post from './components/Post'
+import AddPost from './components/AddPost'
+
 class App extends Component {
   state = {
     user: null
@@ -44,8 +46,13 @@ class App extends Component {
             </p>
             <Route exact path="/users" component={Users} />
             <Route path="/users/:userId" component={Profile} />
-            <Route path="/posts" component={Posts} />
-            <Route path="/posts/:postId" component={Post} />
+            <Route exact path="/posts" component={Posts} />
+            <Switch>
+              <Route path="/posts/add" render={ 
+                (props) => <AddPost {...props} user={this.state.user}/>
+              } />
+              <Route path="/posts/:postId" component={Post} />
+            </Switch>
           </div>
         </Router>
       )

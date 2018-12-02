@@ -45,4 +45,21 @@ router.delete('/:post_id', async(req, res, next) => {
   }
 })
 
+// POST /posts
+// '/' only, because prefixed in server.js
+router.post('/', async (req, res, next) => {
+  // Grab the title, description, and user from the request body
+  const { title, description, user } = req.body
+  try {
+    // Use the post model to create a new post with our request body values
+    const doc = new Post({ title, description, user })
+    // Save the document
+    await doc.save()
+    // If successful, send back a 201 status code and the document
+    res.status(201).send({ data: [doc] })
+  } catch (e) {
+    // If fail, pass to error handler
+  }
+})
+
 module.exports = router
